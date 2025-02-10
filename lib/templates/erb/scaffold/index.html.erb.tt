@@ -1,0 +1,55 @@
+<!-- lib/templates/erb/scaffold/index.html.erb.tt -->
+
+<div class="container mx-auto my-8 px-4">
+  <div class="flex justify-between items-center mb-4">
+    <h1 class="h2"><%= plural_table_name.titleize %></h1>
+    <%% if @<%= plural_table_name %>.exists? %>
+      <%%= link_to 'New <%= singular_table_name.titleize %>' , new_<%= singular_route_name %>_path, class: "btn btn-default" %>
+    <%% end %>
+  </div>
+
+  <%% if @<%= plural_table_name %>.exists? %>
+    <div class="flex flex-col">
+      <div class="overflow-x-auto">
+        <div class="inline-block min-w-full align-middle">
+          <div class="overflow-hidden shadow">
+            <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
+              <thead class="bg-gray-100 dark:bg-gray-700">
+                <tr>
+                  <% attributes.reject(&:password_digest?).each do |attribute| -%>
+                  <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400"><%= attribute.human_name %></th>
+                  <% end %>
+                  <th class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+                  <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <% attributes.reject(&:password_digest?).each do |attribute| -%>
+                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <%%= <%= singular_table_name %>.<%= attribute.column_name %> %>
+                    </td>
+                    <% end %>
+                    <td class="p-4 space-x-2 whitespace-nowrap">
+                      <%%= link_to "View" , <%= singular_table_name %>, class: "btn btn-default" %>
+                      <%%= link_to "Edit" , edit_<%= singular_table_name %>_path(<%= singular_table_name %>), class: "btn btn-default" %>
+                    </td>
+                  </tr>
+                  <%% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <%% else %>
+      <div class="bg-white rounded shadow flex items-center justify-between p-8">
+        <div class="flex-1 text-center">
+          <p class="text-xl font-semibold mb-4">Create your first <%= singular_table_name.titleize %></p>
+          <%%= link_to 'New <%= singular_table_name.titleize %>' , new_<%= singular_route_name %>_path, class: "btn btn-default" %>
+        </div>
+      </div>
+    <%% end %>
+</div>

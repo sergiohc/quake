@@ -1,0 +1,57 @@
+<div class="flex flex-col items-center justify-center min-h-screen px-6 pt-8 mx-auto dark:bg-gray-900">
+  <div class="flex items-center justify-start mb-4">
+    <h2 class="max-w-lg self-center text-xl dark:text-white text-center">
+      <%= t('views.login.instructions') %>
+    </h2>
+  </div>
+
+  <div class="w-full max-w-lg p-6 space-y-8 bg-white rounded-lg shadow dark:bg-gray-800">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), data: { controller: 'login-method phone' }) do |f| %>
+      <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"><%= t('views.login.login_with') %></label>
+      <select id="countries" data-action="change->login-method#selectChange" data-login-method-target="select"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+        <option value="email" selected><%= t('views.login.email_option') %></option>
+        <option value="phone"><%= t('views.login.phone_option') %></option>
+      </select>
+
+      <!-- Campo de e-mail -->
+      <div class="field mt-4" data-login-method-target="emailField">
+        <%= f.email_field :email, label: { text: t('views.login.email_placeholder') },
+          class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' %>
+      </div>
+
+      <!-- Campo de telefone -->
+      <div class="field mt-4" data-login-method-target="phoneField" style="display: none;">
+        <%= f.text_field :phone_number, id: 'phone', data: { 'phone-target': 'phone' }, label: { text: t('views.login.phone_placeholder') },
+          class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' %>
+      </div>
+
+      <!-- Campo de senha -->
+      <div class="field mt-4">
+        <%= f.password_field :password, id: 'password', label: { text: t('views.login.password') },
+          class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' %>
+      </div>
+
+      <!-- Checkbox de lembrar-me -->
+      <div class="mt-4 flex items-center">
+        <%= f.check_box :remember_me, id: 'remember_me', class: 'h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded' %>
+        <label for="remember_me" class="ml-2 block text-sm text-gray-900 dark:text-white">
+          <%= t('views.login.remember_me') %>
+        </label>
+      </div>
+
+      <!-- Botão de login -->
+      <div class="mt-4">
+        <%= f.submit t('views.login.submit_button'), class: 'w-full' %>
+      </div>
+    <% end %>
+
+    <!-- Link para sign-up -->
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        <%= t('views.login.no_account') %>
+        <%= render "devise/shared/links" %>
+      </p>
+    </div>
+  </div>
+</div>

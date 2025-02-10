@@ -1,0 +1,6 @@
+<button data-controller="dark-mode" data-action="dark-mode#toggle dblclick->dark-mode#resetSystemMode" type="button"
+  class="align-middle text-gray-300 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm mr-2.5">
+
+  <%= image_tag(asset_path('dark.svg'), size: '21x16', data: { 'dark-mode-target': "dark" }, class: "hidden fill-current") %>
+  <%= image_tag(asset_path('light.svg'), size: '21x16', data: { 'dark-mode-target': "light" }, class: "fill-current") %>
+</button>

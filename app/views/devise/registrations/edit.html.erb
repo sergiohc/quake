@@ -1,0 +1,70 @@
+<div class="flex flex-col items-center justify-center min-h-screen px-6 pt-8 mx-auto dark:bg-gray-900">
+  <div class="flex items-center justify-start mb-4">
+    <h2 class="max-w-lg self-center text-xl dark:text-white text-center">
+      <%= t('views.registration.edit_instructions', default: "Edit your #{resource_name.to_s.humanize}") %>
+    </h2>
+  </div>
+
+  <div class="w-full max-w-lg p-6 space-y-8 bg-white rounded-lg shadow dark:bg-gray-800">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <!-- Campo de e-mail -->
+      <div class="field mt-4">
+        <%= f.label :email, class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' %>
+      </div>
+
+      <!-- Notificação de confirmação pendente -->
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <div class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+          <%= t('views.registration.pending_confirmation', email: resource.unconfirmed_email, default: "Currently waiting confirmation for: #{resource.unconfirmed_email}") %>
+        </div>
+      <% end %>
+
+      <!-- Campo de senha -->
+      <div class="field mt-4">
+        <%= f.label :password, class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+        <i class="text-xs text-gray-500 dark:text-gray-400">(deixe em branco se você não deseja alterá-la)</i>
+        <%= f.password_field :password, autocomplete: "new-password", class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' %>
+        <% if @minimum_password_length %>
+          <p class="mt-1 text-xs text-gray-500 dark:text-gray-400"><em><%= @minimum_password_length %> caracteres no mínimo</em></p>
+        <% end %>
+      </div>
+
+      <!-- Campo de confirmação de senha -->
+      <div class="field mt-4">
+        <%= f.label :password_confirmation, class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' %>
+      </div>
+
+      <!-- Campo de senha atual -->
+      <div class="field mt-4">
+        <%= f.label :current_password, class: 'block mb-2 text-sm font-medium text-gray-900 dark:text-white' %>
+        <i class="text-xs text-gray-500 dark:text-gray-400">(precisamos da sua senha atual para confirmar as alterações)</i>
+        <%= f.password_field :current_password, autocomplete: "current-password", class: 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500' %>
+      </div>
+
+      <!-- Botão de atualização -->
+      <div class="mt-4">
+        <%= f.submit t('views.registration.update_button', default: "Update"), class: 'w-full bg-primary-500 text-white rounded-lg py-2 px-4' %>
+      </div>
+    <% end %>
+
+    <!-- Opção de cancelar conta -->
+    <div class="mt-6 text-center">
+      <h3 class="text-sm text-gray-600 dark:text-gray-400"><%= t('views.registration.cancel_account', default: "Cancel my account") %></h3>
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        <%= t('views.registration.unhappy', default: "Unhappy?") %>
+        <%= button_to t('views.registration.cancel_button', default: "Cancel my account"), registration_path(resource_name),
+            data: { confirm: t('views.registration.confirm_cancel', default: "Are you sure?"), turbo_confirm: t('views.registration.confirm_cancel', default: "Are you sure?") },
+            method: :delete, class: 'text-red-600 hover:underline dark:text-red-500' %>
+      </p>
+    </div>
+
+    <!-- Link para voltar -->
+    <div class="mt-4 text-center">
+      <%= link_to t('views.registration.back', default: "Back"), :back, class: 'text-primary-600 hover:underline dark:text-primary-500' %>
+    </div>
+  </div>
+</div>

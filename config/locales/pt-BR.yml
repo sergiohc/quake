@@ -1,0 +1,17 @@
+pt-BR:
+  locales:
+    pt-BR: "Português"
+    en: "Inglês"
+    es-ES: "Espanhol"
+  views:
+    login:
+      logo_alt: "Logotipo WAVEE"
+      title: "WAVEE"
+      login_with: "Entrar com"
+      email_option: "E-mail"
+      phone_option: "Telefone"
+      email_placeholder: "Insira seu e-mail"
+      phone_placeholder: "Insira o número do seu telefone"
+      submit_button: "Acessar"
+      instructions: "Insira seu email ou telefone"
+
