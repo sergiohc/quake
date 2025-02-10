@@ -10,9 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_08_13_144816) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_10_210720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "death_causes", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "code", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "games", force: :cascade do |t|
+    t.integer "total_kills", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "start_time_seconds"
+    t.integer "end_time_seconds"
+  end
+
+  create_table "kills", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "killer_id"
+    t.bigint "victim_id", null: false
+    t.bigint "death_cause_id", null: false
+    t.boolean "world_kill", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "time_seconds"
+    t.index ["death_cause_id"], name: "index_kills_on_death_cause_id"
+    t.index ["game_id"], name: "index_kills_on_game_id"
+    t.index ["killer_id"], name: "index_kills_on_killer_id"
+    t.index ["victim_id"], name: "index_kills_on_victim_id"
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string "username", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
