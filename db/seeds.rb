@@ -9,3 +9,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+User.create(email: 'quake@example.com', password: '123123123', password_confirmation: '123123123')
+log = Rails.root.join('games.log')
+
+LogImporter.new(log).call
