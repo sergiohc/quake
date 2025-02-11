@@ -244,6 +244,9 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.9)
+    pg_search (2.3.7)
+      activerecord (>= 6.1)
+      activesupport (>= 6.1)
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -462,6 +465,7 @@ DEPENDENCIES
   listen
   lookbook (>= 2.2.2)
   pg (~> 1.1)
+  pg_search
   pry
   pry-nav
   pry-remote

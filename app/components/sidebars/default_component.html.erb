@@ -19,7 +19,7 @@
           <%= inline_svg_tag("icons/toggle.svg", class: "w-5 h-5", size: '24', data: { "sidebar-collapse-hide" => true } ) %>
         </button>
 
-        <div data-sidebar-collapse-hide>
+        <div class="my-2"data-sidebar-collapse-hide>
           <ul id="dropdown-myesim" class=<%= current_page?(root_path) ? "space-y-2 py-2" : "hidden" %>>
             <li>
               <%= link_to "Games", root_path,

@@ -34,7 +34,7 @@
 
       <!-- Checkbox de lembrar-me -->
       <div class="mt-4 flex items-center">
-        <%= f.check_box :remember_me, id: 'remember_me', class: 'h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded' %>
+        <%= f.check_box :remember_me, id: 'remember_me', label: false, class: 'h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded' %>
         <label for="remember_me" class="ml-2 block text-sm text-gray-900 dark:text-white">
           <%= t('views.login.remember_me') %>
         </label>

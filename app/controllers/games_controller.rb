@@ -4,9 +4,10 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @games = Game.all.order(sort_query)
-                    .page(params[:page])
-                    .per(per_page)
+    @games = Game.apply_filters(params)
+                  .order(sort_query)
+                  .page(params[:page])
+                  .per(per_page)
 
     respond_to do |format|
       format.html

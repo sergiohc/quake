@@ -7,8 +7,8 @@
 
 <div class="max-w-auto mx-auto w-full bg-white p-4 dark:bg-gray-900">
   <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-    <%= form_with url: root_path, method: :get, data: { turbo_frame: "content", controller: "datatable", datatable_target: "form" }, class: "mb-4" do |form| %>
-      <%= render Table::HeaderComponent.new(form: form, search_placeholder: "Search games...") %>
+    <%= form_with url: root_path, method: :get, data: { turbo_frame: "content mods", controller: "datatable", datatable_target: "form" }, class: "mb-4" do |form| %>
+      <%= render Table::HeaderComponent.new(form: form, search_placeholder: "Search games by ID...") %>
     <% end %>
 
     <%= turbo_frame_tag "content" do %>
@@ -23,6 +23,10 @@
 
         <% table.with_column(label: "world kills", attribute: :kills_by_world, sortable: false) do |game| %>
           <%= "#{game.kills_by_world}" %>
+        <% end %>
+
+        <% table.with_column(label: "mod kills", attribute: :kills_by_world, sortable: false) do |game| %>
+          <%= "#{game.kills_by_means}" %>
         <% end %>
 
       <% end %>

@@ -6,9 +6,5 @@ module Sidebars
       @user = user
       super
     end
-
-    def render?
-      @user&.admin?
-    end
   end
 end

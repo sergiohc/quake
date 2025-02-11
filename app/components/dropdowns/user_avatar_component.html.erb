@@ -1,18 +1,17 @@
 <div>
-  <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
+  <button type="button" class="ms-1.5 flex shrink-0 rounded-full bg-primary-800 text-sm focus:ring-2 focus:ring-primary-300 dark:focus:ring-primary-600 sm:ms-4" id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
     <span class="sr-only">Open user menu</span>
     <%= image_profile %>
   </button>
 
-  <div class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown-2" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(347px, 58px, 0px);" data-popper-placement="bottom">
+  <div class="z-50 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow-sm dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown-2" style="position: absolute; inset: 0px auto auto 0px; margin: 0px; transform: translate3d(347px, 58px, 0px);" data-popper-placement="bottom">
     <div class="px-4 py-3" role="none">
-      <!-- TODO create a basic info
       <p class="text-sm text-gray-900 dark:text-white" role="none">
-        Neil Sims
+        <%= @user.full_name %>
       </p>
       <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-        neil.sims@flowbite.com
-      </p> -->
+        <%= @user.email %>
+      </p>
     </div>
     <%= links %>
   </div>
