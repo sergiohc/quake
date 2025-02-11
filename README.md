@@ -1,25 +1,25 @@
-## Este app usa Docker, caso não o tenha siga ...
+#### Prints ####
 
-Você precisará ter o [Docker instalado](https://docs.docker.com/get-docker/).
-Ele está disponível no Windows, macOS e na maioria das distribuições do Linux. Se você é novo no
-Docker e quer aprender em detalhes, confira os [links de recursos adicionais](#aprenda-mais-sobre-docker-e-ruby-on-rails)
+Tela de login
+[![Screenshot](.github/docs/sign.png)](https://github.com/sergiohc/quake/blob/main/.github/docs/sign.png?raw=true)
 
-Você também precisará habilitar o suporte ao Docker Compose v2 se estiver usando o Docker
-Desktop. No Linux nativo sem o Docker Desktop, você pode [instalá-lo como um plugin
-do Docker](https://docs.docker.com/compose/install/linux/). Ele está geralmente
-disponível há algum tempo e é estável. Este projeto usa específicos [Docker Compose v2 recursos](https://nickjanetakis.com/blog/optional-depends-on-with-docker-compose-v2-20-2)
-que só funcionam com o Docker Compose v2 2.20.2+.
+Tabela com estatísticas por partida
+[![Screenshot](.github/docs/home.png)](https://github.com/sergiohc/quake/blob/main/.github/docs/home.png?raw=true)
 
-Se você estiver usando o Windows, espera-se que você esteja seguindo dentro
-do [WSL ou WSL2](https://nickjanetakis.com/blog/a-linux-dev-environment-on-windows-with-wsl-2-docker-desktop-and-more).
-Isso porque vamos executar comandos shell. Você sempre pode modificar
-esses comandos para o PowerShell, se quiser.
+Estatísticas gerais somando todos os jogos
+[![Screenshot](.github/docs/globalstats.png)](https://github.com/sergiohc/quake/blob/main/.github/docs/globalstats.png?raw=true)
+
+## História 1 - Backend
+
+Eu como administrador do jogo, quero ter a estatística por jogo, do total de mortes, de mortes por causa e de mortes causadas pelo `<world>` para entender dificuldade dos jogadores.
+
+Motivo da escolha: Não queria demorar pra fazer o teste pois no momento tenho outro teste para fazer, então não seria tão simples quanto a Api e levaria menos tempo que a historia 2
 
 #### Clone este repositório em qualquer lugar que desejar:
 
 ```sh
-git clone git@github.com:sergiohc/
-cd path
+git clone git@github.com:sergiohc/quake.git
+cd quake
 ```
 
 #### Copie o arquivo .env de exemplo:
@@ -39,7 +39,7 @@ docker compose up --build
 2. Em outro terminal, execute o seguinte comando para configurar o banco de dados:
 
 ```bash
-./run db:setup
+./run rails db:setup
 ```
 
 3. Acesse a aplicação em seu navegador:
@@ -48,18 +48,6 @@ docker compose up --build
 http://localhost:8000/
 ```
 
-## Executando Testes
-
-Para executar os testes, siga os passos abaixo:
-
-1. Inicie os serviços do Docker, se ainda não estiverem em execução:
-
-```bash
-docker compose up
-```
-
-2. Em outro terminal, execute os testes com o seguinte comando:
-
-```bash
-./run rspec:test
-```
+Login:
+  email: quake@example.com
+  password: 123123123
