@@ -25,6 +25,4 @@ if compgen -G "${manifest_files}" > /dev/null 2>&1; then
     -delete
 fi
 
-
-
 exec "$@"
