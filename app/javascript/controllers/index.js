@@ -10,6 +10,9 @@ application.register("components--dropdowns", Components__DropdownsController)
 import DarkModeController from "./dark_mode_controller"
 application.register("dark-mode", DarkModeController)
 
+import DatatableController from "./datatable_controller"
+application.register("datatable", DatatableController)
+
 import LoginMethodController from "./login_method_controller"
 application.register("login-method", LoginMethodController)
 

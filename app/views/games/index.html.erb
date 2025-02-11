@@ -1,0 +1,32 @@
+<%= render Breadcrumbs::DefaultComponent.new(
+  breadcrumbs: [
+    { name: "Home", path: root_path },
+    { name: "Games" }
+  ]
+) %>
+
+<div class="max-w-auto mx-auto w-full bg-white p-4 dark:bg-gray-900">
+  <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+    <%= form_with url: root_path, method: :get, data: { turbo_frame: "content", controller: "datatable", datatable_target: "form" }, class: "mb-4" do |form| %>
+      <%= render Table::HeaderComponent.new(form: form, search_placeholder: "Search games...") %>
+    <% end %>
+
+    <%= turbo_frame_tag "content" do %>
+      <%= render Table::TableComponent.new(records: @games, actions: []) do |table| %>
+        <% table.with_column(label: "Game ID", attribute: :id, sortable: true) do |game| %>
+          <%= "#{game.id}" %>
+        <% end %>
+
+        <% table.with_column(label: "total kills", attribute: :total_kills, sortable: true) do |game| %>
+          <%= "#{game.total_kills}" %>
+        <% end %>
+
+        <% table.with_column(label: "world kills", attribute: :kills_by_world, sortable: false) do |game| %>
+          <%= "#{game.kills_by_world}" %>
+        <% end %>
+
+      <% end %>
+    <% end %>
+    <%= render Table::PaginationComponent.new(records: @games) %>
+  </div>
+</div>

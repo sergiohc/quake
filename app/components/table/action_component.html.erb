@@ -1,0 +1,8 @@
+<% @actions.each do |action| %>
+  <%= link_to path_for(action),
+      class: "text-primary-600 hover:text-primary-900 dark:text-primary-400 dark:hover:text-primary-300",
+      data: action == :destroy ? { turbo_method: :delete, turbo_confirm: "Are you sure?" } : {},
+      method: method_for(action) do %>
+    <%= inline_svg_tag "icons/#{action}.svg", class: "w-5 h-5" %>
+  <% end %>
+<% end %>

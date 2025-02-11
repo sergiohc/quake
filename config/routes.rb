@@ -9,7 +9,7 @@ Rails.application.routes.draw do
           registrations: :registrations,
           passwords: :passwords
         }
-    root to: "pages#home"
+    root to: "games#index"
   end
 
   get "/up/", to: "up#index", as: :up

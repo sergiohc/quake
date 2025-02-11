@@ -1,24 +1,33 @@
-<aside
-  id="sidebar"
-  data-sidebar-target="toggleButton"
-  aria-expanded="false"
-
-  class="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full transition-transform duration-75 lg:z-0 lg:translate-x-0 lg:pt-16 lg:transition-width"
-  aria-label="Sidebar">
+<aside id="sidebar" class="fixed left-0 top-0 z-40 h-screen w-64 -translate-x-full transition-transform duration-75 lg:z-0 lg:translate-x-0 lg:pt-16 lg:transition-width"
+  aria-label="Sidebar"
+  data-sidebar-target="sidebar"
+  data-sidebar-target="sidebar"
+  data-action="mouseenter->sidebar#handleMouseEnter mouseleave->sidebar#handleMouseLeave">
 
   <div class="h-full overflow-y-auto border-r border-primary-600 bg-white px-3 py-4 dark:bg-gray-800">
-
-    <ul class="space-y-2">
+    <ul class="space-y-2 border-b border-primary-400">
       <li>
-        <button type="button" class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
-          <%= show_icon("pages.svg") %>
-          <span class="flex-1 ml-3 text-left whitespace-nowrap">Quake</span>
-          <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        <button type="button"
+          class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+          aria-controls="dropdown-myesim"
+          data-collapse-toggle="dropdown-myesim"
+          data-sidebar-collapse-item
+        >
+
+          <%= inline_svg_tag("icons/pages.svg", class: "w-5 h-5", size: '24') %>
+          <span class="ml-3 flex-1 whitespace-nowrap text-left" data-sidebar-collapse-hide>Meus eSims</span>
+          <%= inline_svg_tag("icons/toggle.svg", class: "w-5 h-5", size: '24', data: { "sidebar-collapse-hide" => true } ) %>
         </button>
-        <ul id="dropdown-pages" class="py-2 space-y-2 block">
-          <li>
-          </li>
-        </ul>
+
+        <div data-sidebar-collapse-hide>
+          <ul id="dropdown-myesim" class=<%= current_page?(root_path) ? "space-y-2 py-2" : "hidden" %>>
+            <li>
+              <%= link_to "Games", root_path,
+              class: "#{current_page?(root_path) ? 'bg-gray-100 dark:bg-gray-700' : ''} hover:bg-gray-100 dark:hover:bg-gray-700 group flex w-full items-center rounded-lg p-2 pl-10 text-base font-medium text-gray-900 dark:text-white",
+              data: { sidebar_collapse_subitem: true } %>
+            </li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>

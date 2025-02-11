@@ -13,6 +13,10 @@ cp -r /public /app
 # shellcheck disable=SC2125
 manifest_files=/app/public/assets/.sprockets-manifest-*.json
 
+if [ -f tmp/pids/server.pid ]; then
+  rm tmp/pids/server.pid
+fi
+
 if compgen -G "${manifest_files}" > /dev/null 2>&1; then
   # shellcheck disable=SC2086,SC2061
   find \
@@ -20,5 +24,7 @@ if compgen -G "${manifest_files}" > /dev/null 2>&1; then
     -type f ! -name "$(basename /public/assets/.sprockets-manifest-*.json)" \
     -delete
 fi
+
+
 
 exec "$@"

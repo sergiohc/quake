@@ -1,46 +1,59 @@
 <!DOCTYPE html>
-<html class="scroll-smooth">
+<html class="scroll-smooth" data-theme="dark">
   <head lang="<%= I18n.locale %>">
-    <title></title>
+    <title>Wavee Global</title>
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= action_cable_meta_tag %>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
 
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#61b9d2">
+    <meta name="msapplication-TileColor" content="#da532c">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
     <meta name="theme-color" content="#ffffff">
-    <meta name="turbo-cache-control" content="no-cache">
 
     <script>
-      if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
+      document.documentElement.classList.toggle(
+        "dark",
+        localStorage.currentTheme === "dark" ||
+        (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches),
+      );
     </script>
   </head>
 
-  <body class="bg-white dark:bg-gray-900 antialiased">
+  <body data-controller="sidebar" class="bg-white dark:bg-gray-900 antialiased overflow-hidden">
     <header>
       <%= render(NavbarComponent.new user: current_user) %>
     </header>
 
     <div class="flex overflow-hidden bg-gray-50 pt-[62px] dark:bg-gray-900">
-      <%= render(Sidebars::DefaultComponent.new user: current_user) %>
-      <div id="flash">
+      <%= render(Sidebars::DefaultComponent.new(user: current_user)) %>
+
+      <div
+        data-sidebar-target="mainContent"
+        id="main-content"
+        class="relative h-[calc(100vh-62px)] w-full overflow-auto scrollbar-none bg-gray-50 dark:bg-gray-900 lg:ms-64"
+      >
         <%= render partial: "shared/notifications" %>
-      </div>
-      <div class="fixed inset-0 z-10 hidden" id="sidebarBackdrop"></div>
-      <div data-sidebar-target="mainContent" id="main-content" class="relative h-full w-full overflow-x-scroll bg-gray-50 dark:bg-gray-900 lg:ms-64">
+
         <main>
           <%= yield %>
           <%= turbo_frame_tag "modal" %>
         </main>
+      </div>
+
+      <div id="flash">
+        <%= render partial: "shared/notifications" %>
       </div>
     </div>
   </body>

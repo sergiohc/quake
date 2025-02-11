@@ -1,0 +1,29 @@
+<div class="grid grid-cols-12 gap-4">
+  <div class="col-span-12 md:col-span-4">
+    <div class="datatable-search">
+      <%= @form.text_field :query,
+        class: "datatable-input w-full md:max-w-[150px]",
+        placeholder: @search_placeholder,
+        label: false,
+        value: params[:query],
+        data: { action: "input->datatable#filter" } %>
+    </div>
+  </div>
+
+  <% filters.each do |filter| %>
+    <div class="col-span-12 md:col-span-4">
+      <%= filter %>
+    </div>
+  <% end %>
+
+  <div class="col-span-12 md:col-span-<%= filters.any? ? '4' : '8' %>">
+    <div class="datatable-dropdown w-full flex justify-end">
+      <div class="flex items-center gap-2">
+        <%= @form.select :per_page, [5, 10, 15, 20, 25, 'ALL'],
+          { selected: params[:per_page] || 15, label: "Entries per page", label_position: :left },
+          { class: "datatable-selector", data: { action: "change->datatable#filter" } }
+        %>
+      </div>
+    </div>
+  </div>
+</div>

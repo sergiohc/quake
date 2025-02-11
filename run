@@ -7,7 +7,7 @@ DC="${DC:-exec}"
 
 # If we're running in CI we need to disable TTY allocation for docker compose
 # commands that enable it by default, such as exec and run.
-TTY=""
+TTY="${TTY:-}"
 if [[ ! -t 1 ]]; then
   TTY="-T"
 fi
@@ -20,10 +20,8 @@ function _dc {
   docker compose "${DC}" ${TTY} "${@}"
 }
 
-function _build_run_down {
-  docker compose build
-  docker compose run ${TTY} "${@}"
-  docker compose down
+function _dc_run {
+   DC="run" _dc --no-deps --rm "${@}"
 }
 
 # -----------------------------------------------------------------------------
@@ -55,11 +53,6 @@ function shell {
   cmd bash "${@}"
 }
 
-function rubocop {
-  # Evaluate and auto-format your Ruby code by passing in --auto-correct.
-  cmd rubocop "${@}"
-}
-
 function psql {
   # Connect to PostgreSQL with psql
   # shellcheck disable=SC1091
@@ -78,30 +71,42 @@ function hadolint {
     hadolint/hadolint hadolint --ignore DL3008 -t style "${@}" - < Dockerfile
 }
 
-function bundle:install {
-  # Install Ruby dependencies and write out a lock file
-  _build_run_down web bundle install
+function rubocop {
+  # Evaluate and auto-format your Ruby code by passing in --auto-correct.
+  cmd rubocop "${@}"
+}
+
+function deps:install {
+  local no_build="${1:-}"
+
+  [ -z "${no_build}" ] && docker compose down && docker compose build
+
+  _dc_run js yarn install
+  _dc_run web bundle install
+}
+
+function bundle {
+  cmd bundle "${@}"
 }
 
 function bundle:outdated {
   # List any installed gems that are outdated
-  cmd bundle outdated
+  _dc_run web bundle outdated
 }
 
 function bundle:update {
   # Update any installed gems that are outdated
-  cmd bundle update
-  bundle:install
+  _dc_run web bundle update
+  deps:install "${@}"
 }
 
-function yarn:install {
-  # Install Yarn dependencies and write out a lock file
-  _build_run_down js yarn install
+function yarn {
+  _dc js yarn "${@}"
 }
 
 function yarn:outdated {
   # Install yarn dependencies and write lock file
-  _dc js yarn outdated
+  _dc_run js yarn outdated
 }
 
 function yarn:build {
@@ -114,7 +119,7 @@ function yarn:build {
     args=(--sourcemap --watch)
   fi
 
-  esbuild app/javascript/*.* --outdir=app/assets/builds --loader:.png=binary --loader:.webp=binary --bundle "${args[@]}"
+  esbuild app/javascript/*.* --outdir=app/assets/builds --bundle "${args[@]}"
 }
 
 function yarn:build:css {
@@ -127,8 +132,8 @@ function yarn:build:css {
     args=(--watch)
   fi
 
-  tailwindcss --postcss \
-    -i ./app/assets/stylesheets/application.tailwind.css \
+  tailwindcss \
+    -i ./app/assets/stylesheets/application.css \
     -o ./app/assets/builds/application.css "${args[@]}"
 }
 
@@ -146,11 +151,6 @@ function ci:install-deps {
 }
 
 function ci:test {
-  # Execute Continuous Integration (CI) pipeline
-  #
-  # It's expected that your CI environment has these tools available:
-  #   - https://github.com/koalaman/shellcheck
-  #   - https://github.com/nickjj/wait-until
   shellcheck run bin/docker-entrypoint-web
   hadolint "${@}"
 
@@ -164,6 +164,8 @@ function ci:test {
   wait-until "docker compose exec -T \
     -e PGPASSWORD=${POSTGRES_PASSWORD} postgres \
     psql -U ${POSTGRES_USER} ${POSTGRES_USER} -c 'SELECT 1'"
+
+  rubocop -f github
 
   docker compose logs
 

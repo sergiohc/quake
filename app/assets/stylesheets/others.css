@@ -1,0 +1,19 @@
+
+.iti {
+  width: 100%;
+  display: block;
+}
+
+.flag-regions {
+  width: 2em !important;
+  height: 2em !important;
+}
+
+.logo {
+  width: 200px;
+}
+
+.wavee-svg {
+  border: 1px solid #ccc;
+  border-radius: 50%;
+}

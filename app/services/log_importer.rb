@@ -36,13 +36,22 @@ class LogImporter
 
       File.foreach(@log_path) do |line|
         if line.include?("InitGame:")
+          # Finaliza o jogo atual, se houver
+          finalize_game(current_game) if current_game
+
+          # Inicia um novo jogo
           current_game = create_game(line)
         elsif line.include?("Kill: ") && current_game
           process_kill(line, current_game)
-        elsif line.include?("ShutdownGame:") && current_game
+        elsif (line.include?("ShutdownGame:") || line.include?("Exit:")) && current_game
+          # Finaliza o jogo atual
           finalize_game(current_game, line)
+          current_game = nil
         end
       end
+
+      # Finaliza o último jogo, se houver
+      finalize_game(current_game) if current_game
     end
   end
 
@@ -98,7 +107,7 @@ class LogImporter
     if parts.size == 3  # Formato HHH:MM:SS
       hours, minutes, seconds = parts
       hours * 3600 + minutes * 60 + seconds
-    else                # Formato MM:SS
+    else
       minutes, seconds = parts
       minutes * 60 + seconds
     end
@@ -106,9 +115,12 @@ class LogImporter
     0
   end
 
-  def finalize_game(game, line)
+  def finalize_game(game, line = nil)
+    return unless game
+
+    end_time = line ? extract_timestamp(line) : game.kills.last&.time_seconds || game.start_time_seconds
     game.update!(
-      end_time_seconds: extract_timestamp(line),
+      end_time_seconds: end_time,
       total_kills: game.kills.count
     )
   end

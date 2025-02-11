@@ -1,0 +1,11 @@
+<div class="datatable-bottom">
+  <div class="datatable-info text-sm">
+    <%= page_entries_info @records %>
+  </div>
+
+  <%= paginate @records,
+    class: "datatable-pagination",
+    previous_label: inline_svg_tag("icons/chevron-left.svg", class: "w-5 h-5"),
+    next_label: inline_svg_tag("icons/chevron-right.svg", class: "w-5 h-5")
+  %>
+</div>
