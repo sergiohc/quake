@@ -34,4 +34,20 @@ class Game < ApplicationRecord
   def kills_by_world
     kills.where(world_kill: true).count
   end
+
+  def self.global_statistics
+    total_kills = Kill.count
+
+    kills_by_means = Kill.joins(:death_cause)
+                         .group("death_causes.code")
+                         .count
+
+    kills_by_world = Kill.where(world_kill: true).count
+
+    {
+      total_kills: total_kills,
+      kills_by_means: kills_by_means,
+      kills_by_world: kills_by_world
+    }
+  end
 end

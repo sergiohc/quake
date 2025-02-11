@@ -4,6 +4,7 @@ class GamesController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @global_statistics = Game.global_statistics
     @games = Game.apply_filters(params)
                   .order(sort_query)
                   .page(params[:page])
