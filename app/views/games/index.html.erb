@@ -102,7 +102,7 @@
         <% end %>
 
       <% end %>
+      <%= render Table::PaginationComponent.new(records: @games) %>
     <% end %>
-    <%= render Table::PaginationComponent.new(records: @games) %>
   </div>
 </div>

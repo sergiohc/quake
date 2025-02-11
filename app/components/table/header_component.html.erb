@@ -19,7 +19,7 @@
   <div class="col-span-12 md:col-span-<%= filters.any? ? '4' : '8' %>">
     <div class="datatable-dropdown w-full flex justify-end">
       <div class="flex items-center gap-2">
-        <%= @form.select :per_page, [5, 10, 15, 20, 25, 'ALL'],
+        <%= @form.select :per_page, [5, 10, 15, 20, 25],
           { selected: params[:per_page] || 15, label: "Entries per page", label_position: :left },
           { class: "datatable-selector", data: { action: "change->datatable#filter" } }
         %>
